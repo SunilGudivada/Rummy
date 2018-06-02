@@ -1,0 +1,212 @@
+<html>
+<head>
+	
+	<title>Rummy</title>
+	
+	<style type="text/css">
+	body{
+		background-color: #012e0b;
+		font-family:'courier new';
+		/*background-image: url('1.jpg') ;*/
+		background-size: cover;
+		background-position: center;
+	}
+
+	.table{
+		width: 800px;
+		height: 350px;
+		background-color: #4c9051;
+		border-radius: 25px;
+		position: absolute;
+		top: 0;
+		right: 0;
+		left: 0;
+		bottom: 0;
+		margin: auto;
+		/*border-color: #2a1604eb;*/
+		/*border-width: 10px;*/
+		/*border-style: solid;*/
+		-moz-box-shadow: inset 0 0 40px #012e0b;
+		-webkit-box-shadow: inset 0 0 40px #012e0b;
+		box-shadow: inset 0 0 40px #012e0b;
+	}
+
+	::-webkit-scrollbar{
+		display: none;
+	}
+
+	.card {
+		margin-bottom: 0px;
+		border-radius: 5px;
+	}
+
+	.card-self {
+		width: 78px;
+		height: 110px;
+		border-color: black;
+		border-radius: 8px;
+		position: absolute;
+		bottom: -40px;
+		left: 10;
+		margin: auto;
+	}
+
+	.card-enemy{
+		width: 78px;
+		height: 110px;
+		border-color: black;
+		border-radius: 8px;
+		position: absolute;
+		top: -40px;
+		left: 10;
+		margin: auto;
+	}
+
+	.card-deck{
+		width: 78px;
+		height: 110px;
+		border-color: black;
+		border-radius: 8px;
+		position: absolute;
+		top: 0px;
+		left: 0px;
+		right: 0;
+		bottom: 0;
+		margin: auto;
+	}
+</style>
+
+<script src="js/particles.js"></script>
+
+</head>
+<body>
+	
+	<div class="table">
+		<div class="card">
+			<div class="card-self" id="card-self-1"></div>
+			<div class="card-self" id="card-self-2"></div>
+			<div class="card-self" id="card-self-3"></div>
+			<div class="card-self" id="card-self-4"></div>
+			<div class="card-self" id="card-self-5"></div>
+			<div class="card-self" id="card-self-6"></div>
+			<div class="card-self" id="card-self-7"></div>
+			<div class="card-self" id="card-self-8"></div>
+			<div class="card-self" id="card-self-9"></div>
+			<div class="card-self" id="card-self-10"></div>
+			<div class="card-self" id="card-self-11"></div>
+			<div class="card-self" id="card-self-12"></div>
+			<div class="card-self" id="card-self-13"></div>
+
+			<div class="card-deck" id="card-deck"></div>
+
+			<div class="card-enemy" id="card-enemy-1"></div>
+			<div class="card-enemy" id="card-enemy-2"></div>
+			<div class="card-enemy" id="card-enemy-3"></div>
+			<div class="card-enemy" id="card-enemy-4"></div>
+			<div class="card-enemy" id="card-enemy-5"></div>
+			<div class="card-enemy" id="card-enemy-6"></div>
+			<div class="card-enemy" id="card-enemy-7"></div>
+			<div class="card-enemy" id="card-enemy-8"></div>
+			<div class="card-enemy" id="card-enemy-9"></div>
+			<div class="card-enemy" id="card-enemy-10"></div>
+			<div class="card-enemy" id="card-enemy-11"></div>
+			<div class="card-enemy" id="card-enemy-12"></div>
+			<div class="card-enemy" id="card-enemy-13"></div>
+		</div>
+	</div>
+
+	
+</body>
+</html>
+<script src="js/jquery-1.11.2.min.js"></script>
+<script type="text/javascript" src="js/transit.min.js"></script>
+
+<script type="text/javascript">
+	
+
+    $(document).ready(function(){
+
+    	var i=0;
+
+    	var cardarr = [];
+
+    	function shuffle(array) {
+		  var currentIndex = array.length, temporaryValue, randomIndex;
+
+		  // While there remain elements to shuffle...
+		  while (0 !== currentIndex) {
+
+		    // Pick a remaining element...
+		    randomIndex = Math.floor(Math.random() * currentIndex);
+		    currentIndex -= 1;
+
+		    // And swap it with the current element.
+		    temporaryValue = array[currentIndex];
+		    array[currentIndex] = array[randomIndex];
+		    array[randomIndex] = temporaryValue;
+		  }
+
+		  return array;
+		}
+
+
+    	function rearrangecards(){
+
+    		for(var i=1;i<=13;i++){ cardarr.push('c'+i); }
+    		for(var i=1;i<=13;i++){ cardarr.push('d'+i); }
+    		for(var i=1;i<=13;i++){ cardarr.push('h'+i); }
+    		for(var i=1;i<=13;i++){ cardarr.push('s'+i); }
+    		cardarr = shuffle(cardarr);
+
+    		console.log(cardarr);
+
+    	}
+
+    	rearrangecards();
+
+    	var userCards = [];
+
+    	for(var i=0;i<13;i++){ userCards.push(cardarr[i]); }
+
+    	userCards.sort();
+
+   		console.log(userCards);
+
+    	function generateLetter() {
+		  var text = "";
+		  var possible = "cdhs";
+		  for (var i = 0; i < 1; i++)
+		    text += possible.charAt(Math.floor(Math.random() * possible.length));
+		  return text;
+		}
+
+    	for(i=1;i<=13;i++){
+
+    		var card = generateLetter();
+
+    		$("#card-self-"+i).animate({left:i*51});
+    		$("#card-self-"+i).css('background-image',"url('images/cards/"+userCards[i-1]+".png')");
+    		$("#card-self-"+i).css('background-size',"cover");
+    	}
+
+    	for(i=1;i<=13;i++){
+
+    		$("#card-enemy-"+i).animate({left:(200+i*20)});
+    		$("#card-enemy-"+i).css('background-image',"url('images/cards/cardback_red.png')");
+    		$("#card-enemy-"+i).css('background-size',"cover");
+    	}
+
+    	$(".card-deck").css('left',350);
+    	$(".card-deck").css('background-image',"url('images/cards/cardback_red.png')");
+    	$(".card-deck").css('background-size',"cover");
+
+    	for(i=1;i<=4;i++){
+
+
+    		$("#card-deck-"+i).animate({transform:'rotate('+i*(-25)+'deg)'});
+    	}
+
+    	
+     
+    });
+</script>
